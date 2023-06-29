@@ -36,6 +36,19 @@ export class S3LambdaApiStack extends cdk.Stack {
       resources: ['arn:aws:s3:::*'],
     }));
 
+
+    // Define an IAM policy statement which allows the Lambda function to send traces to X-Ray
+    s3ListFunction.addToRolePolicy(new iam.PolicyStatement({
+      actions: ['xray:PutTraceSegments', 'xray:PutTelemetryRecords'],
+      resources: ['*'],
+    }));
+
+    // Define an IAM policy statement which allows the Lambda function to sign API Gateway requests
+    s3ListFunction.addToRolePolicy(new iam.PolicyStatement({
+      actions: ['apigateway:*'],
+      resources: ['*'],
+    }));
+    
     // Define the API Gateway
     const api = new apigateway.RestApi(this, 'S3BucketListApi', {
       restApiName: 'S3 Bucket List Service',
