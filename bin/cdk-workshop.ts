@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 import * as cdk from 'aws-cdk-lib';
-import { S3LambdaApiStack } from '../lib/cdk-workshop-stack';
+import { LambdaStack } from '../lib/java-lambda';
+import { AdotCollectorStack } from '../lib/adot-collector';
 
 const app = new cdk.App();
-new S3LambdaApiStack(app, 'S3LambdaApiStack');
+new AdotCollectorStack(app, 'AdotCollectorStack');
+new LambdaStack(app, 'LambdaStack');

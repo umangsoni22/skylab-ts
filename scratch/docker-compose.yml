@@ -1,0 +1,18 @@
+version: "3"
+services:
+  otel-collector:
+    image: otel/opentelemetry-collector
+    volumes:
+      - ./collector-config.yml:/etc/otel-collector-config.yml
+    command: ["--config", "/etc/otel-collector-config.yml"]
+    ports:
+      - "13133:13133"
+      - "55679:55679"
+      - "1888:1888"
+      - "4317:4317"
+      - "4318:4318"
+
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
